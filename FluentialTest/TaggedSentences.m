@@ -52,4 +52,18 @@
     return allNotTaggedWords;
 }
 
+-(NSString *)replaceWords:(NSString *)stringInput insideDictionary:(NSDictionary *)inputDictionary
+{
+    NSString * lowerCaseString = [stringInput lowercaseString];
+    
+    // ran out of time to implement this method
+    //would have looked like about methods,
+    // but whenever i ran into a string that matched from the dictionary
+    // i would somehow take out that part of the string and replace it with the key instead
+    // havent thought about how...
+    // hm
+    
+    return lowerCaseString;
+}
+
 @end
