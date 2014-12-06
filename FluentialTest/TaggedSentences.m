@@ -21,47 +21,77 @@
 -(NSString *)taggedWords:(NSString *)stringInput insideDictionary:(NSDictionary *)inputDictionary
 {
     NSString * lowerCaseString = [stringInput lowercaseString];
-    NSArray * dictionaryStrings = [inputDictionary allValues];
+    NSMutableString * allTaggedWords = [[NSMutableString alloc] init];
     
-    NSString * allTaggedWords = @"";
-    
-    for (int i = 0; i < [dictionaryStrings count]; ++i) {
-        if ([lowerCaseString containsString:dictionaryStrings[i]])
+    for (id key in inputDictionary)
+    {
+        id value = [inputDictionary valueForKey:key];
+        for (int i = 0; i < [value count]; ++i)
         {
-            [allTaggedWords stringByAppendingString:dictionaryStrings[i]];
+            NSString * stringValue = value[i];
+            if ([lowerCaseString rangeOfString:stringValue].location == NSNotFound)
+            {
+                //[allTaggedWords appendString:stringValue];
+            }
+            else
+            {
+                [allTaggedWords appendString:stringValue];
+                [allTaggedWords appendString:@" "];
+            }
         }
     }
     
-    return allTaggedWords;
+    return  allTaggedWords;
 }
 
 -(NSString *)notTaggedWords:(NSString *)stringInput insideDictionary:(NSDictionary *)inputDictionary
 {
     NSString * lowerCaseString = [stringInput lowercaseString];
-    NSArray * dictionaryStrings = [inputDictionary allValues];
     
-    NSString * allNotTaggedWords = @"";
-    
-    for (int i = 0; i < [dictionaryStrings count]; ++i) {
-        if (![lowerCaseString containsString:dictionaryStrings[i]])
+    for (id key in inputDictionary)
+    {
+        id value = [inputDictionary valueForKey:key];
+        for (int i = 0; i < [value count]; ++i)
         {
-            [allNotTaggedWords stringByAppendingString:dictionaryStrings[i]];
+            NSString * stringValue = value[i];
+            if ([lowerCaseString rangeOfString:stringValue].location == NSNotFound)
+            {
+                // nothing
+            }
+            else
+            {
+                lowerCaseString = [lowerCaseString stringByReplacingOccurrencesOfString:stringValue
+                                                                                 withString:@""];
+            }
         }
     }
     
-    return allNotTaggedWords;
+    return  lowerCaseString;
 }
 
 -(NSString *)replaceWords:(NSString *)stringInput insideDictionary:(NSDictionary *)inputDictionary
 {
     NSString * lowerCaseString = [stringInput lowercaseString];
     
-    // ran out of time to implement this method
-    //would have looked like about methods,
-    // but whenever i ran into a string that matched from the dictionary
-    // i would somehow take out that part of the string and replace it with the key instead
-    // havent thought about how...
-    // hm
+    for (id key in inputDictionary)
+    {
+        id value = [inputDictionary valueForKey:key];
+        for (int i = 0; i < [value count]; ++i)
+        {
+            NSString * stringValue = value[i];
+            NSString * stringKey = key;
+            if ([lowerCaseString rangeOfString:stringValue].location == NSNotFound)
+            {
+                // nothing
+            }
+            else
+            {
+                lowerCaseString = [lowerCaseString stringByReplacingOccurrencesOfString:stringValue
+                                                                             withString:stringKey];
+            }
+        }
+    }
+
     
     return lowerCaseString;
 }
